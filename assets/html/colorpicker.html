@@ -1,0 +1,71 @@
+<!Doctype html>
+<html>
+<head>
+   <script type="text/javascript" src="jquery.js"></script>
+   <script type="text/javascript">
+
+	$(function()
+	{
+	    var canvas = document.getElementById('color');
+	    var ctx = canvas.getContext('2d');
+	    var image = new Image();
+
+	    image.onload = function () 
+	    {
+	        ctx.drawImage(image, 0, 0, image.width, image.height);
+	    }
+
+	    var imageSrc = './colorpicker.png';
+	    image.src = imageSrc;
+
+		$('#color').bind('touchmove', function(jQueryEvent) 
+		{
+		   jQueryEvent.preventDefault();
+		   var event = window.event;
+
+		   var canvasOffset 	= $(canvas).offset();
+	        var canvasX 		= Math.floor(event.touches[0].pageX - canvasOffset.left);
+	        var canvasY 		= Math.floor(event.touches[0].pageY - canvasOffset.top);
+	        var imageData 		= ctx.getImageData(canvasX, canvasY, 1, 1);
+	        var pixel 			= imageData.data;
+
+	        var red 			= pixel[0];
+	        var green 			= pixel[1];
+	        var blue 			= pixel[2];
+
+	        var brushColorHEX = rgbToHex(red, green, blue);
+
+	        $('.preview').css('backgroundColor', brushColorHEX);
+
+	        $(document).attr('title', brushColorHEX);
+
+	        navigator.cascades.postMessage("{ \"brushColorHEX\": \""+brushColorHEX+"\" }");
+
+			navigator.cascades.postMessage("TOUCHING X: " + x + ", Y: " + y);
+		});
+
+	    function rgbToHex(r, g, b) 
+	    {
+		    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+		}
+
+		function componentToHex(c) 
+		{
+		    var hex = c.toString(16);
+		    return hex.length == 1 ? "0" + hex : hex;
+		}
+
+	});
+
+   </script>
+
+<style type="text/css">
+	.preview{ display:block; background: green; width:700px; height:100px; }
+</style>
+
+</head>
+	<body>
+		<div class="preview"></div>
+		<canvas id="color" width="700px" height="300px"></canvas>
+	</body>
+</html>

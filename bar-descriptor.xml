@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<qnx xmlns="http://www.qnx.com/schemas/application/1.0">
+
+    <id>com.nemory.snap2chat.lite</id>
+    <versionNumber>3.21.0</versionNumber>
+    <description>Snap10</description>
+    <name>Snap10</name>
+    <icon>
+       <image>new144.png</image>
+    </icon>
+    <splashScreens>
+       <image>splashQ10.jpg</image>
+       <image>splashZ10.jpg</image>
+       <image>splashZ30.jpg</image>
+       <image>splashPassport.jpg</image>
+    </splashScreens>
+    <author>Nemory Studios</author>
+    <buildId>1</buildId>
+    
+
+    <configuration name="Device-Debug">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset entryPointId="Snap2Chat" path="arm/o.le-v7-g/Snap2ChatProUI" entry="true" type="Qnx/Elf">Snap2ChatProUI</asset>
+       <asset path="arm/o.le-v7-g/Snap2ChatProUI" entry="true" type="Qnx/Elf">Snap2ChatProUI</asset>
+       <asset entryPointId="Snap2ChatHeadlessService" path="../Snap2ChatHeadlessService/arm/Snap2ChatHeadlessService" type="Qnx/Elf">Snap2ChatHeadlessService</asset>
+    </configuration>
+    <configuration name="Device-Release">
+       <entryPointType>Qnx/Cascades</entryPointType>
+       <asset entryPointId="Snap2Chat" path="arm/o.le-v7/Snap2ChatProUI.so" entry="true" type="Qnx/Elf">Snap2ChatProUI.so</asset>
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset path="arm/o.le-v7/Snap2ChatProUI.so" entry="true" type="Qnx/Elf">Snap2ChatProUI.so</asset>
+       <asset entryPointId="Snap2ChatHeadlessService" path="../Snap2ChatHeadlessService/arm/Snap2ChatHeadlessService" type="Qnx/Elf">Snap2ChatHeadlessService</asset>
+    </configuration>
+    <configuration name="Device-Profile">
+       <platformArchitecture>armle-v7</platformArchitecture>
+       <asset entryPointId="Snap2Chat" path="arm-p/o.le-v7-g/Snap2ChatProUI" entry="true" type="Qnx/Elf">Snap2ChatProUI</asset>
+       <asset entryPointId="Snap2ChatHeadlessService" path="../Snap2ChatHeadlessService/arm/Snap2ChatHeadlessService" type="Qnx/Elf">Snap2ChatHeadlessService</asset>
+    </configuration>
+    <configuration name="Simulator-Debug">
+       <platformArchitecture>x86</platformArchitecture>
+       <asset entryPointId="Snap2Chat" path="x86/o-g/Snap2ChatProUI" entry="true" type="Qnx/Elf">Snap2ChatProUI</asset>
+       <asset entryPointId="Snap2ChatHeadlessService" path="../Snap2ChatHeadlessService/x86/Snap2ChatHeadlessService" type="Qnx/Elf">Snap2ChatHeadlessService</asset>
+    </configuration>
+    
+    <initialWindow>
+        <autoOrients>true</autoOrients>
+        <systemChrome>none</systemChrome>
+        <transparent>false</transparent>
+    </initialWindow>
+
+    <asset path="translations" dest="qm">
+        <include name="*.qm"/>
+    </asset>
+    
+    <asset path="assets">assets</asset>
+    <asset public="true" path="hubassets">hubassets</asset>
+    <asset path="assets/images/icon.png">icon.png</asset>
+    <asset path="assets/notificationIcon.png" public="true">notificationIcon.png</asset>
+    
+    <!-- QRC -->
+    
+    <asset path="assets" dest="assets">
+	    <exclude name="**/*.qml"/>
+	</asset>
+    <asset path="assets/images/new144.png">new144.png</asset>
+    <asset path="assets/images/splash/splashQ10.jpg">splashQ10.jpg</asset>
+    <asset path="assets/images/splash/splashZ10.jpg">splashZ10.jpg</asset>
+    <asset path="assets/images/splash/splashZ30.jpg">splashZ30.jpg</asset>
+    <asset path="assets/images/splash/splashPassport.jpg">splashPassport.jpg</asset>
+    
+    <!-- HUB INTEGRATION -->
+   
+    
+    <!-- 
+    <invoke-target id="com.nemory.snap2chat.card.viewcompose">
+       <invoke-target-type>card.previewer</invoke-target-type>
+       <invoke-target-name>Snap2Chat Card</invoke-target-name>
+       <entry-point-id>Snap2Chat</entry-point-id>
+		<filter>
+			<action>bb.action.VIEW</action>
+		    <action>bb.action.SHARE</action>
+			<mime-type>hub/vnd.test.item</mime-type>
+			<property var="uris" value="pim:hub/vnd.test.item"/>
+		</filter>
+       <filter>          
+       	   <action>bb.action.VIEW</action>                                                                                                                            
+           <action>bb.action.COMPOSE</action>                                                                                                        
+           <mime-type>hub/vnd.test.item</mime-type>                                                                                                   
+       </filter>                                                                                                                                     
+	</invoke-target>
+	-->
+
+    <invoke-target id="com.nemory.Snap2ChatHeadlessService.Lite">
+       <invoke-target-type>application.headless</invoke-target-type>
+       <invoke-target-name>Snap2Chat Headless Service</invoke-target-name>
+       <icon><image></image></icon>
+       <entry-point-id>Snap2ChatHeadlessService</entry-point-id>
+      <filter>
+             <action>bb.action.system.STARTED</action>
+             <mime-type>application/vnd.blackberry.system.event.STARTED</mime-type>
+             <property var="uris" value="data://local"/>
+       </filter>
+       <filter>
+             <action>bb.action.START</action>
+             <mime-type>*</mime-type>
+             <property var="uris" value="headless:"/>
+       </filter>
+       <!--
+		<filter>
+			<action>bb.action.DELETE</action>
+			<mime-type>hub/vnd.test.item</mime-type>
+			<property var="uris" value="data://,pim:"/>
+		</filter>
+		<filter>
+			<action>bb.action.MARKREAD</action>
+			<mime-type>hub/vnd.test.item</mime-type>
+			<property var="uris" value="data://,pim:"/>
+		</filter>
+		<filter>
+			<action>bb.action.MARKUNREAD</action>
+			<mime-type>hub/vnd.test.item</mime-type>
+			<property var="uris" value="data://,pim:"/>
+		</filter>
+		<filter>
+			<action>bb.action.MARKPRIORREAD</action>
+			<mime-type>hub/vnd.test.item</mime-type>
+			<property var="uris" value="data://,pim:"/>
+		</filter>
+		<filter>
+			<action>bb.action.DELETEPRIOR</action>
+			<mime-type>hub/vnd.test.item</mime-type>
+			<property var="uris" value="data://,pim:"/>
+		</filter>
+        <filter>
+            <action>bb.action.PUSH</action>
+            <mime-type>application/vnd.push</mime-type>
+        </filter>
+        -->
+    </invoke-target>  
+    
+    <!-- SEARCH INTEGRATION -->
+    
+    
+    <!--
+    <invoke-target id="com.nemory.snap2chat.search">
+		<invoke-target-type>APPLICATION</invoke-target-type>
+		<entry-point-id>Snap2Chat</entry-point-id>
+		<filter>
+			<action>bb.action.SEARCH.EXTENDED</action>
+			<mime-type>application/vnd.bb.search.criteria</mime-type>
+		</filter>
+	</invoke-target>
+	-->
+
+	
+	<!-- NOTIFICATION INVOCATION-->
+    
+    <invoke-target id="com.nemory.snap2chat.invoke.open.lite">
+      <invoke-target-type>application</invoke-target-type>
+      <entry-point-id>Snap2Chat</entry-point-id>
+      <filter>
+         <action>bb.action.OPEN</action>
+         <mime-type>text/plain</mime-type>
+      </filter>
+    </invoke-target>
+
+    <!-- SHARE INTEGRATION -->
+    
+    <!--
+    <invoke-target id="com.nemory.snap2chat.invocation.sharecomposer">
+        <invoke-target-name>Snap2Chat Share Composer</invoke-target-name>
+        <entry-point-id>Snap2Chat</entry-point-id>
+        <icon><image>icon.png</image></icon>
+        <type>card.composer</type>
+        <filter>
+            <action>bb.action.SHARE</action>
+            <mime-type>image/jpeg</mime-type>
+            <mime-type>image/png</mime-type>
+        </filter>
+    </invoke-target>
+    -->
+    
+    <!-- HEADLESS START -->
+    
+    <entryPoint id="Snap2Chat">
+		<name>Snap10</name>
+	</entryPoint>
+
+	<entryPoint id="Snap2ChatHeadlessService">
+		<name>Snap2ChatHeadless Service</name>
+		<entryPointType>Qnx/Elf</entryPointType>
+		<permission system="true">run_native</permission>
+	    <permission system="true">_sys_run_headless</permission>
+	    <!-- 
+		<permission system="true">_sys_manage_pimdomain_external_accounts</permission>
+		<permission system="true">_sys_access_pim_unified</permission>
+	    <permission>read_device_identifying_information</permission>
+	    -->
+	</entryPoint>
+	
+	<!--
+
+	<invoke-target id="com.nemory.snap2chatheadless">
+		<invoke-target-type>application.headless</invoke-target-type>
+		<invoke-target-name>Snap2ChatHeadless Service</invoke-target-name>
+		<entry-point-id>Snap2ChatHeadlessService</entry-point-id>
+		<filter>
+			<action>bb.action.system.STARTED</action>
+			<mime-type>application/vnd.blackberry.system.event.STARTED</mime-type>
+			<property var="uris" value="data://local" />
+		</filter>
+		<filter>
+			<action>com.nemory.Snap2ChatHeadlessService.RESET</action>
+			<mime-type>*</mime-type>
+			<property var="uris" value="headless:" />
+		</filter>
+	</invoke-target>
+	
+	-->
+
+	<invoke-target id="com.nemory.snap2chat.lite">
+		<invoke-target-type>application</invoke-target-type>
+		<invoke-target-name>Snap2Chat</invoke-target-name>
+		<entry-point-id>Snap2Chat</entry-point-id>
+		<icon>
+			<image>icon.png</image>
+		</icon>
+	</invoke-target>
+
+    <permission system="true">_sys_run_headless</permission>
+    <permission system="true">_sys_headless_nostop</permission>
+    
+    <!-- HEADLESS END -->
+
+    <permission system="true">run_native</permission>
+    <permission>use_camera</permission>
+    <permission>bbm_connect</permission>
+    <permission>access_internet</permission>
+    <permission>access_shared</permission>
+    <permission>run_when_backgrounded</permission>
+    <permission>post_notification</permission>
+    <permission>read_device_identifying_information</permission>
+    <permission>access_location_services</permission>
+    <permission>record_audio</permission>
+    <permission>use_camera_desktop</permission>
+    <permission>access_pimdomain_contacts</permission>
+    
+    <env var="LD_LIBRARY_PATH" value="app/native/lib:/usr/lib/qt4/lib"/>
+	<env var="QT_QPA_FONTDIR" value="/usr/lib/qt4/lib/fonts"/>
+	
+</qnx>
